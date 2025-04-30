@@ -18,12 +18,12 @@ android {
             storePassword 'demokey'
         }
     }
-    compileSdkVersion 31
+    compileSdkVersion 35
 
     defaultConfig {
         applicationId "com.banuba.sdk.example.effect_player_arcloud_example"
-        minSdkVersion 23
-        targetSdkVersion 31
+        minSdkVersion 26
+        targetSdkVersion 35
         versionCode 1
         versionName "1.0"
 
