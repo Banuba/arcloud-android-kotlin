@@ -72,7 +72,7 @@ dependencies {
     implementation 'com.airbnb.android:lottie:3.5.0'
 
     // Face AR SDK
-    implementation "com.banuba.sdk:banuba_sdk:1+"
+    implementation "com.banuba.sdk:banuba_sdk:1.17.0"
 
     // AR Cloud dependencies
     implementation "com.banuba.sdk:ar-cloud:1.31.0"
