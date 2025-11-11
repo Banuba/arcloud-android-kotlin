@@ -1,4 +1,16 @@
-Quick start examples for [Banuba SDK on Android](https://docs.banuba.com/face-ar-sdk-v1/android/android_overview).  
+AR cloud is a Banuba service that helps developers decrease the download size of their apps that run 
+[face filters](https://www.banuba.com/facear-sdk/face-filters). 
+Instead of bundling them with the application, software engineers can store effects in the cloud and allow users 
+to download them as needed. Given that a single 3D mask takes about 2.5 MB, this option helps attract more users and 
+make their experience more enjoyable. 
+
+![image](image.gif)
+
+You can license hundreds of AR face masks in the 
+[Banuba Asset Store](http://assetstore.banuba.net) or create your own 
+in any 3D software and make them compatible with Banuba in the 
+[online studio](https://studio.banuba.com/).
+
   
 # Getting Started
 
