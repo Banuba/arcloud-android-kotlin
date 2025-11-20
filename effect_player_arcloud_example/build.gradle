@@ -75,7 +75,7 @@ dependencies {
     implementation "com.banuba.sdk:banuba_sdk:1.17.0"
 
     // AR Cloud dependencies
-    implementation "com.banuba.sdk:ar-cloud:1.31.0"
+    implementation "com.banuba.sdk:ar-cloud:1.48.4"
     implementation 'io.insert-koin:koin-android:3.2.0'
 
     testImplementation 'junit:junit:4.13.2'
