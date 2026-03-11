@@ -8,14 +8,13 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.banuba.sdk.effect_player.Effect
+import com.banuba.sdk.example.effect_player_arcloud_example.databinding.ActivityApplyMaskBinding
 import com.banuba.sdk.input.CameraDevice
 import com.banuba.sdk.input.CameraInput
 import com.banuba.sdk.manager.BanubaSdkManager
 import com.banuba.sdk.output.SurfaceOutput
 import com.banuba.sdk.player.Player
 import com.banuba.sdk.player.PlayerTouchListener
-import kotlinx.android.synthetic.main.activity_apply_mask.*
-import kotlinx.android.synthetic.main.activity_camera_preview.surfaceView
 
 
 /**
@@ -41,7 +40,7 @@ class MaskActivity : AppCompatActivity() {
     }
 
     private val surfaceOutput by lazy(LazyThreadSafetyMode.NONE) {
-        SurfaceOutput(surfaceView.holder)
+        SurfaceOutput(binding.surfaceView.holder)
     }
 
     private val maskUri by lazy(LazyThreadSafetyMode.NONE) {
@@ -55,17 +54,20 @@ class MaskActivity : AppCompatActivity() {
     private var shouldApply = false
     private var effect: Effect? = null
 
+    private lateinit var binding: ActivityApplyMaskBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_apply_mask)
+        binding = ActivityApplyMaskBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         player.use(CameraInput(cameraDevice))
         player.use(surfaceOutput)
 
         // Set custom OnTouchListener to change mask style.
-        surfaceView.setOnTouchListener(PlayerTouchListener(this, player))
+        binding.surfaceView.setOnTouchListener(PlayerTouchListener(this, player))
 
-        showMaskButton.setOnClickListener {
+        binding.showMaskButton.setOnClickListener {
             shouldApply = !shouldApply
 
             updateUIState()
@@ -129,13 +131,13 @@ class MaskActivity : AppCompatActivity() {
     }
 
     private fun updateUIState() {
-        showMaskButton.text = if (shouldApply) {
+        binding.showMaskButton.text = if (shouldApply) {
             getString(R.string.hide_mask)
         } else {
             getString(R.string.show_mask)
         }
 
-        maskStyleView.visibility = if (shouldApply) {
+        binding.maskStyleView.visibility = if (shouldApply) {
             View.VISIBLE
         } else {
             View.GONE

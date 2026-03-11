@@ -13,12 +13,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.banuba.sdk.example.effect_player_arcloud_example.R
+import com.banuba.sdk.example.effect_player_arcloud_example.databinding.ViewEffectBinding
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.view_effect.*
 import java.io.File
 
 class EffectsAdapter(
@@ -38,8 +37,11 @@ class EffectsAdapter(
 
     override fun getItemId(position: Int) = getItem(position).hashCode().toLong()
 
+    private lateinit var binding: ViewEffectBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EffectViewHolder {
+
         val view = LayoutInflater.from(parent.context).inflate(R.layout.view_effect, parent, false)
+        binding = ViewEffectBinding.bind(view)
         return EffectViewHolder(view)
     }
 
@@ -47,8 +49,8 @@ class EffectsAdapter(
         holder.bind(getItem(position))
     }
 
-    inner class EffectViewHolder(override val containerView: View) :
-        RecyclerView.ViewHolder(containerView), LayoutContainer {
+    inner class EffectViewHolder(val containerView: View) :
+        RecyclerView.ViewHolder(containerView) {
 
         fun bind(effectWrapper: EffectWrapper) {
 
@@ -60,9 +62,9 @@ class EffectsAdapter(
                 }
             }
 
-            handleEffectPreview(effectImageView, effectWrapper)
+            handleEffectPreview(binding.effectImageView, effectWrapper)
 
-            handleDownloadingAnimation(downloadingAnimationView, effectDownloadBtn, effectWrapper)
+            handleDownloadingAnimation(binding.downloadingAnimationView, binding.effectDownloadBtn, effectWrapper)
         }
 
         private fun handleEffectPreview(imageView: ImageView, effectWrapper: EffectWrapper) {
@@ -75,7 +77,7 @@ class EffectsAdapter(
             } ?: Uri.EMPTY
 
             if (previewUri == Uri.EMPTY) {
-                effectImageView.setImageResource(R.drawable.bg_effect_normal)
+                binding.effectImageView.setImageResource(R.drawable.bg_effect_normal)
             } else {
                 val requestOptions = RequestOptions().apply {
                     transform(CenterCrop(), CircleCrop())

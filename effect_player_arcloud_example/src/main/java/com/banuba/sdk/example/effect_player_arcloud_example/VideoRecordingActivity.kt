@@ -6,13 +6,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.banuba.sdk.example.effect_player_arcloud_example.databinding.ActivityVideoRecordingBinding
 import com.banuba.sdk.input.CameraDevice
 import com.banuba.sdk.input.CameraInput
 import com.banuba.sdk.output.SurfaceOutput
 import com.banuba.sdk.output.VideoOutput
 import com.banuba.sdk.player.Player
-import kotlinx.android.synthetic.main.activity_camera_preview.surfaceView
-import kotlinx.android.synthetic.main.activity_video_recording.*
 import java.io.File
 
 /**
@@ -43,7 +42,7 @@ class VideoRecordingActivity : AppCompatActivity() {
     }
 
     private val surfaceOutput by lazy(LazyThreadSafetyMode.NONE) {
-        SurfaceOutput(surfaceView.holder)
+        SurfaceOutput(binding.surfaceView.holder)
     }
 
     private val videoOutput by lazy(LazyThreadSafetyMode.NONE) {
@@ -52,15 +51,18 @@ class VideoRecordingActivity : AppCompatActivity() {
 
     private var isRecording = false
 
+    private lateinit var binding: ActivityVideoRecordingBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_video_recording)
+        binding = ActivityVideoRecordingBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         player.use(CameraInput(cameraDevice))
         player.addOutput(surfaceOutput)
         player.addOutput(videoOutput)
 
-        recordActionButton.setOnClickListener {
+        binding.recordActionButton.setOnClickListener {
             isRecording = !isRecording
 
             updateUiState()
@@ -125,16 +127,16 @@ class VideoRecordingActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
-    private fun recordAudio() = recordAudioSwitch.isChecked
+    private fun recordAudio() = binding.recordAudioSwitch.isChecked
 
     private fun updateUiState() {
-        recordActionButton.text = if (isRecording) {
+        binding.recordActionButton.text = if (isRecording) {
             getString(R.string.stop)
         } else {
             getString(R.string.start)
         }
 
-        recordAudioSwitch.visibility = if (isRecording) {
+        binding.recordAudioSwitch.visibility = if (isRecording) {
             View.GONE
         } else {
             View.VISIBLE

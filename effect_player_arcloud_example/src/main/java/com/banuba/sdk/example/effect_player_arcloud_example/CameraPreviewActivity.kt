@@ -5,11 +5,11 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.banuba.sdk.example.effect_player_arcloud_example.databinding.ActivityCameraPreviewBinding
 import com.banuba.sdk.input.CameraDevice
 import com.banuba.sdk.input.CameraInput
 import com.banuba.sdk.output.SurfaceOutput
 import com.banuba.sdk.player.Player
-import kotlinx.android.synthetic.main.activity_camera_preview.*
 
 /**
  * Sample activity that shows how to open Android camera with Banuba SDK.
@@ -31,12 +31,16 @@ class CameraPreviewActivity : AppCompatActivity() {
     }
 
     private val surfaceOutput by lazy(LazyThreadSafetyMode.NONE) {
-        SurfaceOutput(surfaceView.holder)
+        SurfaceOutput(binding.surfaceView.holder)
     }
+
+    private lateinit var binding: ActivityCameraPreviewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_camera_preview)
+
+        binding = ActivityCameraPreviewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         player.use(CameraInput(cameraDevice))
         player.use(surfaceOutput)

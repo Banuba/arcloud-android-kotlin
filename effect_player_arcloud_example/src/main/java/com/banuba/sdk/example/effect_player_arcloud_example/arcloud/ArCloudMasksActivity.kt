@@ -10,14 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.banuba.sdk.effect_player.Effect
 import com.banuba.sdk.example.effect_player_arcloud_example.*
+import com.banuba.sdk.example.effect_player_arcloud_example.databinding.ActivityArCloudEffectsBinding
 import com.banuba.sdk.input.CameraDevice
 import com.banuba.sdk.input.CameraInput
 import com.banuba.sdk.output.SurfaceOutput
 import com.banuba.sdk.player.Player
 import com.banuba.sdk.player.PlayerTouchListener
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.activity_ar_cloud_effects.*
-import kotlinx.android.synthetic.main.activity_camera_preview.surfaceView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ArCloudMasksActivity : AppCompatActivity() {
@@ -39,22 +38,25 @@ class ArCloudMasksActivity : AppCompatActivity() {
     }
 
     private val surfaceOutput by lazy(LazyThreadSafetyMode.NONE) {
-        SurfaceOutput(surfaceView.holder)
+        SurfaceOutput(binding.surfaceView.holder)
     }
 
     var effectsAdapter: EffectsAdapter? = null
 
     private var effect: Effect? = null
 
+    lateinit var binding: ActivityArCloudEffectsBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_ar_cloud_effects)
+        binding = ActivityArCloudEffectsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         player.use(CameraInput(cameraDevice))
         player.use(surfaceOutput)
 
         // Set custom OnTouchListener to change mask style.
-        surfaceView.setOnTouchListener(PlayerTouchListener(this, player))
+        binding.surfaceView.setOnTouchListener(PlayerTouchListener(this, player))
 
         effectsAdapter = EffectsAdapter(Glide.with(this))
         effectsAdapter?.actionCallback = object : EffectsAdapter.ActionCallback {
@@ -73,7 +75,7 @@ class ArCloudMasksActivity : AppCompatActivity() {
             }
         }
 
-        effectsRv.run {
+        binding.effectsRv.run {
             layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
             adapter = effectsAdapter
             itemAnimator = null

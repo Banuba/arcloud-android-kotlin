@@ -22,13 +22,13 @@ class MainKoinModule {
         single(createdAtStart = true) {
             ArEffectsRepositoryProvider(
                 arEffectsRepository = get(named("backendArEffectsRepository")),
-                ioDispatcher = get(named("ioDispatcher"))
+                //ioDispatcher = get(named("ioDispatcher"))
             )
         }
 
         viewModel {
             EffectsViewModel(
-                arEffectsRepository = get<ArEffectsRepositoryProvider>().provide()
+                arEffectsRepository = get<ArEffectsRepositoryProvider>().provide(prioritizedMasks = HashSet())
             )
         }
 
